@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Freedium Extensions - Settings</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --bg-light: #f8fafc;
+            --bg-dark: #1a202c;
+            --text-light: #1a202c;
+            --text-dark: #ffffff;
+            --border-light: #e2e8f0;
+            --border-dark: #4a5568;
+            --card-light: #ffffff;
+            --card-dark: #2d3748;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-light);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-theme {
+            background: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 15px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+            align-items: start;
+        }
+
+        .setting-card {
+            background: var(--card-light);
+            border: 1px solid var(--border-light);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .setting-controls-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            align-items: end;
+            margin-bottom: 20px;
+        }
+
+        body.dark-theme .setting-card {
+            background: var(--card-dark);
+            border-color: var(--border-dark);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .setting-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.15);
+        }
+
+        .compact-card {
+            padding: 22px 25px;
+            min-height: auto;
+        }
+
+        .compact-card .setting-title {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+        }
+
+        .compact-card .setting-description {
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .compact-card .setting-control {
+            margin-bottom: 12px;
+        }
+
+        .compact-card .setting-control:last-child {
+            margin-bottom: 0;
+        }
+
+        .setting-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .setting-description {
+            font-size: 1rem;
+            opacity: 0.75;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .setting-control {
+            margin-bottom: 18px;
+        }
+
+        .setting-control:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        body.dark-theme label {
+            color: var(--text-dark);
+        }
+
+        select, input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background: var(--bg-light);
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        body.dark-theme select,
+        body.dark-theme input[type="text"],
+        body.dark-theme input[type="number"] {
+            background: var(--bg-dark);
+            color: var(--text-dark);
+            border-color: var(--border-dark);
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.3s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .button-position-preview {
+            position: relative;
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            border: 2px dashed var(--border-light);
+            border-radius: 10px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        body.dark-theme .button-position-preview {
+            background: linear-gradient(135deg, #2d3748, #4a5568);
+            border-color: var(--border-dark);
+        }
+
+        .preview-button {
+            position: absolute;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 10px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .preview-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .save-button {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 30px auto 0;
+        }
+
+        .save-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .save-button:active {
+            transform: translateY(0);
+        }
+
+        .reset-button-main {
+            background: transparent;
+            color: #ef4444;
+            border: 2px solid #ef4444;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 15px auto 0;
+        }
+
+        .reset-button-main:hover {
+            background: #ef4444;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .reset-button-main:active {
+            transform: translateY(0);
+        }
+
+        /* Custom Dialog Styles */
+        .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .dialog-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .dialog-box {
+            background: var(--card-light);
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: scale(0.8) translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-theme .dialog-box {
+            background: var(--card-dark);
+        }
+
+        .dialog-overlay.show .dialog-box {
+            transform: scale(1) translateY(0);
+        }
+
+        .dialog-header {
+            padding: 25px 25px 0;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 20px;
+        }
+
+        body.dark-theme .dialog-header {
+            border-color: var(--border-dark);
+        }
+
+        .dialog-header h3 {
+            margin: 0 0 20px 0;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .dialog-content {
+            padding: 0 25px;
+        }
+
+        .dialog-content p {
+            margin-bottom: 20px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .reset-preview {
+            background: var(--bg-light);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        body.dark-theme .reset-preview {
+            background: var(--bg-dark);
+            border-color: var(--border-dark);
+        }
+
+        .reset-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        body.dark-theme .reset-item {
+            border-color: var(--border-dark);
+        }
+
+        .reset-item:last-child {
+            border-bottom: none;
+        }
+
+        .reset-label {
+            font-weight: 600;
+            opacity: 0.8;
+        }
+
+        .reset-value {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .dialog-warning {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .dialog-actions {
+            padding: 20px 25px 25px;
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+
+        .dialog-button {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .cancel-button {
+            background: var(--border-light);
+            color: var(--text-light);
+        }
+
+        body.dark-theme .cancel-button {
+            background: var(--border-dark);
+            color: var(--text-dark);
+        }
+
+        .cancel-button:hover {
+            background: var(--border-dark);
+            transform: translateY(-1px);
+        }
+
+        body.dark-theme .cancel-button:hover {
+            background: var(--border-light);
+        }
+
+        .confirm-button {
+            background: #ef4444;
+            color: white;
+        }
+
+        .confirm-button:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .status-message {
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .status-message.show {
+            opacity: 1;
+        }
+
+        .status-message.success {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .status-message.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .keyboard-shortcut {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .key-combo {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .key {
+            background: var(--border-light);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            min-width: 32px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+        }
+
+        body.dark-theme .key {
+            background: var(--border-dark);
+            border-color: var(--border-dark);
+        }
+
+        .reset-button {
+            background: transparent;
+            color: #ef4444;
+            border: 1px solid #ef4444;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .reset-button:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .settings-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .full-width {
+                grid-column: 1;
+            }
+
+            .setting-controls-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .header {
+                padding: 30px 15px;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .setting-card {
+                padding: 20px;
+            }
+
+            .dialog-box {
+                width: 95%;
+                margin: 10px;
+            }
+
+            .dialog-actions {
+                flex-direction: column;
+            }
+
+            .dialog-button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .setting-title {
+                font-size: 1.2rem;
+            }
+
+            .setting-description {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Freedium Extensions</h1>
+            <p>Customize your free reading experience</p>
+        </div>
+
+        <div class="settings-grid">
+            <!-- Row 1: Theme + Keyboard Shortcuts (both compact) -->
+            <div class="setting-card compact-card">
+                <div class="setting-title">
+                    Theme Settings
+                </div>
+                <div class="setting-description">
+                    Choose your preferred theme for the extension.
+                </div>
+                <div class="setting-control">
+                    <label for="theme-select">Theme:</label>
+                    <select id="theme-select">
+                        <option value="dark">🌙 Dark Theme</option>
+                        <option value="light">☀️ Light Theme</option>
+                        <option value="auto">🔄 Auto (System)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Keyboard Shortcuts -->
+            <div class="setting-card compact-card">
+                <div class="setting-title">
+                    Keyboard Shortcuts
+                </div>
+                <div class="setting-description">
+                    Configure keyboard shortcuts for quick access.
+                </div>
+                <div class="setting-control">
+                    <label>Current Shortcut:</label>
+                    <div class="keyboard-shortcut">
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span>
+                            <span class="key">Shift</span>
+                            <span class="key">F</span>
+                        </div>
+                        <button class="reset-button" id="reset-shortcut">Change</button>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="enable-shortcuts">
+                            <span class="slider"></span>
+                        </div>
+                        Enable keyboard shortcuts
+                    </label>
+                </div>
+            </div>
+
+            <!-- Button Position (full width) -->
+            <div class="setting-card full-width">
+                <div class="setting-title">
+                    Button Position
+                </div>
+                <div class="setting-description">
+                    Customize where the "Free Read" button appears on Medium articles.
+                </div>
+                <div class="setting-controls-row">
+                    <div class="setting-control">
+                        <label for="position-select">Position:</label>
+                        <select id="position-select">
+                            <option value="top-right">Top Right</option>
+                            <option value="top-left">Top Left</option>
+                            <option value="bottom-right">Bottom Right</option>
+                            <option value="bottom-left">Bottom Left</option>
+                        </select>
+                    </div>
+                    <div class="setting-control">
+                        <label for="offset-x">Horizontal Offset (px):</label>
+                        <input type="number" id="offset-x" min="0" max="100" value="20">
+                    </div>
+                    <div class="setting-control">
+                        <label for="offset-y">Vertical Offset (px):</label>
+                        <input type="number" id="offset-y" min="0" max="100" value="20">
+                    </div>
+                </div>
+                <div class="button-position-preview" id="position-preview">
+                    <div class="preview-button" id="preview-button">
+                        ✓ Free Read
+                    </div>
+                </div>
+            </div>
+
+            <!-- Button Appearance -->
+            <div class="setting-card">
+                <div class="setting-title">
+                    Button Appearance
+                </div>
+                <div class="setting-description">
+                    Customize the look and feel of the floating button.
+                </div>
+                <div class="setting-control">
+                    <label for="button-size">Button Size:</label>
+                    <select id="button-size">
+                        <option value="small">Small</option>
+                        <option value="medium">Medium</option>
+                        <option value="large">Large</option>
+                    </select>
+                </div>
+                <div class="setting-control">
+                    <label for="button-style">Button Style:</label>
+                    <select id="button-style">
+                        <option value="gradient">Gradient (Default)</option>
+                        <option value="solid">Solid Color</option>
+                        <option value="minimal">Minimal</option>
+                        <option value="glass">Glass Effect</option>
+                    </select>
+                </div>
+                <div class="setting-control">
+                    <label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="show-animation">
+                            <span class="slider"></span>
+                        </div>
+                        Show entrance animation
+                    </label>
+                </div>
+            </div>
+
+            <!-- Site Settings -->
+            <div class="setting-card">
+                <div class="setting-title">
+                    Site Settings
+                </div>
+                <div class="setting-description">
+                    Configure which sites show the floating button and other site-specific options.
+                </div>
+                <div class="setting-control">
+                    <label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="auto-detect" checked>
+                            <span class="slider"></span>
+                        </div>
+                        Auto-detect Medium articles
+                    </label>
+                </div>
+                <div class="setting-control">
+                    <label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="show-on-all" checked>
+                            <span class="slider"></span>
+                        </div>
+                        Show button on all supported sites
+                    </label>
+                </div>
+                <div class="setting-control">
+                    <label for="custom-sites">Custom Sites (one per line):</label>
+                    <textarea id="custom-sites" rows="3" style="width: 100%; padding: 10px; border: 1px solid var(--border-light); border-radius: 8px; resize: vertical;" placeholder="example.com&#10;blog.example.com"></textarea>
+                </div>
+            </div>
+
+            <!-- Advanced Settings (full width) -->
+            <div class="setting-card full-width">
+                <div class="setting-title">
+                    Advanced Settings
+                </div>
+                <div class="setting-description">
+                    Advanced options for power users and debugging.
+                </div>
+                <div class="setting-controls-row">
+                    <div class="setting-control">
+                        <label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="debug-mode">
+                                <span class="slider"></span>
+                            </div>
+                            Enable debug mode
+                        </label>
+                    </div>
+                    <div class="setting-control">
+                        <label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="context-menu" checked>
+                                <span class="slider"></span>
+                            </div>
+                            Show right-click context menu
+                        </label>
+                    </div>
+                    <div class="setting-control">
+                        <label for="button-delay">Button appearance delay (ms):</label>
+                        <input type="number" id="button-delay" min="0" max="5000" value="1000">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="save-button" id="save-settings">💾 Save Settings</button>
+        
+        <button class="reset-button-main" id="reset-settings">🔄 Reset to Default</button>
+        
+        <div class="status-message" id="status-message"></div>
+    </div>
+
+    <!-- Custom Confirmation Dialog -->
+    <div class="dialog-overlay" id="dialog-overlay">
+        <div class="dialog-box">
+            <div class="dialog-header">
+                <h3>Reset to Default Settings</h3>
+            </div>
+            <div class="dialog-content">
+                <p>Are you sure you want to reset all settings to their default values?</p>
+                <div class="reset-preview">
+                    <div class="reset-item">
+                        <span class="reset-label">Theme:</span>
+                        <span class="reset-value">Dark</span>
+                    </div>
+                    <div class="reset-item">
+                        <span class="reset-label">Button Position:</span>
+                        <span class="reset-value">Top Right</span>
+                    </div>
+                    <div class="reset-item">
+                        <span class="reset-label">Button Size:</span>
+                        <span class="reset-value">Medium</span>
+                    </div>
+                    <div class="reset-item">
+                        <span class="reset-label">Button Style:</span>
+                        <span class="reset-value">Gradient</span>
+                    </div>
+                    <div class="reset-item">
+                        <span class="reset-label">All other settings:</span>
+                        <span class="reset-value">Default values</span>
+                    </div>
+                </div>
+                <div class="dialog-warning">
+                    ⚠️ This action cannot be undone
+                </div>
+            </div>
+            <div class="dialog-actions">
+                <button class="dialog-button cancel-button" id="cancel-reset">Cancel</button>
+                <button class="dialog-button confirm-button" id="confirm-reset">Reset Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="options.js"></script>
+</body>
+</html>

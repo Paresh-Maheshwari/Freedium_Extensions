@@ -72,6 +72,7 @@ chrome.commands.onCommand.addListener((command) => {
         chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
             if (tabs[0]) {
                 const freediumUrl = `https://freedium.cfd/${tabs[0].url}`;
+                
                 chrome.tabs.create({
                     url: freediumUrl,
                     active: true

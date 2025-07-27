@@ -1,83 +1,135 @@
 # Changelog
 
-All notable changes to the Freedium Extensions project will be documented in this file.
+All notable changes to the Freedium Medium Redirector Extension will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - 2025-01-27
+## [1.2.0] - 2025-01-27
+
+### 🎉 Major Features Added
+- **Comprehensive Options Page** - Professional settings interface with live preview
+- **Theme System** - Light/Dark themes with auto system detection
+- **Button Customization** - 4 positions, 3 sizes, 4 styles with live preview
+- **Custom Site Support** - Add your own domains for button detection
+- **Advanced Settings** - Debug mode, context menu control, timing adjustments
+
+### 🎨 UI/UX Improvements
+- **Clean Design** - Removed emoji clutter from headers and titles
+- **Professional Layout** - Card-based settings with perfect spacing
+- **Responsive Grid** - Optimized layout with no blank spaces
+- **Custom Confirmation Dialog** - Beautiful modal for reset confirmation
+- **Live Preview** - Real-time button position preview in settings
+- **Better Typography** - Improved fonts, spacing, and visual hierarchy
+
+### ⚙️ Customization Options
+- **Button Position**: Top-right, Top-left, Bottom-right, Bottom-left with pixel-perfect offsets
+- **Button Sizes**: Small, Medium, Large with appropriate scaling
+- **Button Styles**: 
+  - Gradient (default purple gradient)
+  - Solid (solid purple color)
+  - Minimal (outline style)
+  - Glass (translucent blur effect)
+- **Themes**: Dark, Light, Auto (system preference)
+- **Animations**: Toggle entrance animations on/off
+- **Timing**: Customizable button appearance delay (0-5000ms)
+
+### 🔧 Technical Improvements
+- **Settings Persistence** - All customizations saved and synced
+- **Live Updates** - Settings apply immediately without reload
+- **Better Performance** - Optimized code with reduced overhead
+- **Enhanced Privacy** - No data collection, local storage only
+- **Debug Mode** - Console logging for troubleshooting
+- **Error Handling** - Improved error handling and user feedback
+
+### 🌐 Enhanced Site Support
+- **Auto-detection Toggle** - Enable/disable Medium article detection
+- **Custom Sites** - Add your own domains (one per line)
+- **Show on All Sites** - Control button visibility globally
+- **Better Detection** - Improved algorithm for Medium-hosted publications
+
+### 📱 Mobile & Accessibility
+- **Responsive Design** - Perfect layout on all screen sizes
+- **Touch-Friendly** - Larger touch targets on mobile devices
+- **Keyboard Navigation** - Full keyboard support in settings
+- **Screen Reader** - Better accessibility compliance
+
+### 🎯 User Experience
+- **Intuitive Settings** - Easy-to-understand options with descriptions
+- **Visual Feedback** - Status messages and loading indicators
+- **One-Click Reset** - Restore default settings with confirmation
+- **Keyboard Shortcuts** - Manage shortcuts from settings page
+
+## [1.1.0] - 2025-01-20
 
 ### Added
-- 🆓 **Floating "Free Read" button** that appears automatically on Medium articles
-- 🖱️ **Right-click context menu** for universal access on any webpage
-- ⌨️ **Keyboard shortcut** (`Ctrl+Shift+F` / `Cmd+Shift+F`) for quick access
-- 🎨 **Extension popup** with "Open Current Page in Freedium" button
-- 🌐 **Multi-site support** for Medium and Medium-hosted publications:
-  - Medium.com and all Medium-hosted publications
-  - Substack.com
-  - TowardsDataScience.com
-  - InfoSecWriteups.com
-  - BetterProgramming.pub
-  - JavaScript.PlainEnglish.io
-  - Python.PlainEnglish.io
-  - LevelUp.GitConnected.com
-  - Blog.DevGenius.io
-- ⚡ **SPA support** - Works with Single Page Applications
-- 📱 **Responsive design** that works on mobile and desktop
-- 🎨 **Beautiful gradient button design** with hover effects
-- 🔒 **Privacy-focused** - No data collection or tracking
-- 🎯 **Professional icons** with unlock/free access theme
+- **Right-click Context Menu** - Universal access from any webpage
+- **Keyboard Shortcut** - Ctrl+Shift+F (Cmd+Shift+F on Mac)
+- **Theme Toggle** - Light/Dark theme support in popup
+- **Enhanced Popup** - Professional design with theme switching
+- **Better Site Detection** - Improved Medium article recognition
+- **SPA Support** - Works with Single Page Applications
 
-### Technical Details
-- Manifest V3 compliance for modern browsers
-- Content script injection for supported sites
-- Background service worker for context menu handling
-- CSS styling with modern gradients and animations
-- Cross-browser compatibility (Chrome, Firefox, Edge, Safari)
+### Changed
+- **Improved Button Design** - Modern gradient with better hover effects
+- **Enhanced Styling** - Better responsive design for mobile devices
+- **Code Organization** - Cleaner, more maintainable codebase
 
-### Files Structure
-```
-Freedium_Extensions/
-├── manifest.json     # Extension configuration
-├── background.js     # Context menu handler
-├── content.js        # Main content script
-├── styles.css        # Button styling
-├── popup.html        # Extension popup UI
-├── popup.js          # Popup functionality
-├── README.md         # Documentation
-├── LICENSE           # MIT License
-├── CONTRIBUTING.md   # Contribution guidelines
-├── CHANGELOG.md      # Version history
-└── icons/            # Extension icons
-    ├── icon.svg      # Original SVG
-    ├── icon16.png    # Small icon
-    ├── icon48.png    # Medium icon
-    └── icon128.png   # Large icon
-```
+### Fixed
+- **Button Positioning** - More reliable placement on various sites
+- **Theme Persistence** - Theme settings now save properly
+- **Mobile Compatibility** - Better button sizing on mobile devices
+
+## [1.0.0] - 2025-01-15
+
+### Added
+- **Initial Release** - Basic floating button functionality
+- **Medium Detection** - Automatic detection of Medium articles
+- **Freedium Integration** - One-click redirect to Freedium
+- **Basic Styling** - Purple gradient button design
+- **Multi-site Support** - Support for major Medium-hosted publications
+
+### Supported Sites
+- Medium.com and all Medium-hosted publications
+- Substack.com
+- TowardsDataScience.com
+- InfoSecWriteups.com
+- BetterProgramming.pub
+- JavaScript.PlainEnglish.io
+- Python.PlainEnglish.io
+- LevelUp.GitConnected.com
+- Blog.DevGenius.io
 
 ---
 
-## Future Planned Features
+## 🚀 Upcoming Features
 
-### [1.1.0] - Planned
-- [ ] Options page for customization
-- [ ] Custom button positioning
-- [ ] Theme selection (light/dark)
-- [ ] Statistics tracking (local only)
-- [ ] More publication support
+### Planned for v1.3.0
+- **Export/Import Settings** - Backup and restore configurations
+- **Button Animations** - More entrance animation options
+- **Hotkey Customization** - Custom keyboard shortcuts
+- **Site Whitelist/Blacklist** - More granular site control
+- **Performance Metrics** - Optional usage insights
 
-### [1.2.0] - Planned
-- [ ] Internationalization (i18n) support
-- [ ] Custom keyboard shortcuts
-- [ ] Button animation options
-- [ ] Export/import settings
+### Under Consideration
+- **Multiple Button Styles** - More design options
+- **Notification System** - Success/error notifications
+- **Auto-update Checker** - Check for extension updates
+- **Internationalization** - Multi-language support
 
 ---
 
-## Contributing
+## 📝 Notes
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to this project.
+- All versions maintain backward compatibility
+- Settings are automatically migrated between versions
+- No data collection or tracking in any version
+- Open source and privacy-focused development
 
-## License
+## 🐛 Bug Reports
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Found a bug? Please report it on our [GitHub Issues](https://github.com/Paresh-Maheshwari/Freedium_Extensions/issues) page.
+
+## 💡 Feature Requests
+
+Have an idea for a new feature? We'd love to hear it! Open a [feature request](https://github.com/Paresh-Maheshwari/Freedium_Extensions/issues/new) on GitHub.

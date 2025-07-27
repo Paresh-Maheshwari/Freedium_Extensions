@@ -23,15 +23,33 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/* Light theme for floating button */
+.freedium-btn.light-theme {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    color: #1a202c;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
 .freedium-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
 }
 
+.freedium-btn.light-theme:hover {
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
 .freedium-btn:active {
     transform: translateY(0);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.freedium-btn.light-theme:active {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .freedium-btn svg {
@@ -64,6 +82,58 @@
     }
 }
 
+/* Additional button styles */
+.freedium-btn.solid-style {
+    background: #667eea !important;
+    border: 1px solid #5a67d8 !important;
+}
+
+.freedium-btn.solid-style:hover {
+    background: #5a67d8 !important;
+}
+
+.freedium-btn.solid-style.light-theme {
+    background: #667eea !important;
+    color: white !important;
+    border: 1px solid #5a67d8 !important;
+}
+
+.freedium-btn.minimal-style {
+    background: rgba(102, 126, 234, 0.1) !important;
+    color: #667eea !important;
+    border: 1px solid #667eea !important;
+}
+
+.freedium-btn.minimal-style:hover {
+    background: rgba(102, 126, 234, 0.2) !important;
+}
+
+.freedium-btn.minimal-style.light-theme {
+    background: rgba(102, 126, 234, 0.1) !important;
+    color: #667eea !important;
+    border: 1px solid #667eea !important;
+}
+
+.freedium-btn.glass-style {
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.freedium-btn.glass-style:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+
+.freedium-btn.glass-style.light-theme {
+    background: rgba(0, 0, 0, 0.1) !important;
+    color: #1a202c !important;
+    border: 1px solid rgba(0, 0, 0, 0.2) !important;
+}
+
+.freedium-btn.glass-style.light-theme:hover {
+    background: rgba(0, 0, 0, 0.15) !important;
+}
+
 /* Animation for when button appears */
 @keyframes slideInFromRight {
     from {
@@ -74,8 +144,4 @@
         transform: translateX(0);
         opacity: 1;
     }
-}
-
-.freedium-btn {
-    animation: slideInFromRight 0.5s ease-out;
 }
